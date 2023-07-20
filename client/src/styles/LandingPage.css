@@ -1,0 +1,63 @@
+/* Assuming you have a separate CSS file (styles.css) */
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.login form {
+  width: 350px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.inputs label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.inputs input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.inputs span {
+  color: red;
+  font-size: 14px;
+}
+
+.login button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.login button:hover {
+  background-color: #0056b3;
+}

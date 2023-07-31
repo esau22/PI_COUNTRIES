@@ -1,9 +1,8 @@
-const models = require("./models/index");
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
-//const fs = require("fs");
-//const path = require("path");
+const fs = require("fs");
+const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -14,18 +13,7 @@ const sequelize = new Sequelize(
   }
 );
 
-for (const key in models) {
-  models[key](sequelize);
-}
-
-let entries = Object.entries(sequelize.models);
-let capsEntries = entries.map((entry) => [
-  entry[0][0].toUpperCase() + entry[0].slice(1),
-  entry[1],
-]);
-sequelize.models = Object.fromEntries(capsEntries);
-{
-  /*const basename = path.basename(__filename);
+const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
@@ -45,8 +33,7 @@ let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
   entry[1],
 ]);
-sequelize.models = Object.fromEntries(capsEntries);*/
-}
+sequelize.models = Object.fromEntries(capsEntries);
 
 const { Country, Activity } = sequelize.models;
 

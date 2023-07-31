@@ -1,100 +1,41 @@
-.create {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0;
-}
-
-.create form {
-  width: 350px;
+/* CSS for the FormPage component */
+form {
+  max-width: 400px;
+  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
 }
 
-.create h1 {
-  text-align: center;
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #007bff;
-}
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.inputs label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.inputs input {
-  padding: 10px;
+form div {
   margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
-.inputs span {
-  color: red;
-  font-size: 14px;
-}
-
-.create button {
-  padding: 10px 15px;
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  width: 100%;
 }
 
-.create button:hover {
+button[type="submit"]:hover {
   background-color: #0056b3;
-}
-
-.custom-combo-box {
-  position: relative;
-  width: 200px; /* Set the desired width for the combo box */
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Styling for the selected option */
-.selected-option {
-  font-weight: bold;
-}
-
-/* Styling for the options dropdown */
-.options {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px 0;
-}
-
-/* Styling for each option */
-.option {
-  padding: 5px 10px;
-}
-
-/* Show options when hovering over the combo box */
-.custom-combo-box:hover .options {
-  display: block;
 }

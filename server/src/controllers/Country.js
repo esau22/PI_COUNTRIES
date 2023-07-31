@@ -1,92 +1,54 @@
 const axios = require("axios");
+const { Country, Activity } = require("../db");
 
-const { Country } = require("../db");
+//const URL = "http://localhost:30001/countries";
 
-const postCount = async function (req, res) {
+const getCountry = async function (req, res) {
   try {
-    const {
-      id,
-      name,
-      flagImage,
-      continent,
-      capital,
-      subregion,
-      area,
-      poblacion,
-    } = req.body;
-    const newCountry = await Country.create({
-      id,
-      name,
-      flagImage,
-      continent,
-      capital,
-      subregion,
-      area,
-      poblacion,
+    const data = await Country.findAll({
+      include: [{ model: Activity }],
     });
-    res.status(200).json(newCountry);
+    return res.status(200).json(data);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(404).json({ error: "Internal server error" });
-  }
-};
-
-const getContry = async function (req, res) {
-  try {
-    const countries = await Country.findAll();
-    res.status(200).json(countries);
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(404).json({ error: "Internal server error" });
+    res.status(404).end(error.message);
   }
 };
 
 const getCountryId = async function (req, res) {
+  const idPais = req.params.idPais.toUpperCase(); // Convertimos el ID a mayúsculas por si viene en minúsculas
+
   try {
-    const { id } = req.params;
-    const country = await Country.findOne({
-      where: { id },
-      include: "Activities", // Incluye las actividades turísticas asociadas al país
-    });
+    const country = await Country.findOne({ where: { id: idPais } });
 
-    if (!country) {
-      return res.status(404).json({ error: "Country not found" });
+    if (country) {
+      res.status(200).json(country);
+    } else {
+      res.status(404).json({ error: "País no encontrado" });
     }
-
-    res.status(200).json(country);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).end(error.message);
   }
 };
 
+// Función para obtener países por nombre
 const getCountryName = async function (req, res) {
+  const nombrePais = req.query.nombrePais.toUpperCase(); // Capturar el nombre del país desde los parámetros de consulta
+
   try {
-    const { name } = req.query;
-    const countries = await Country.findAll({
-      where: sequelize.where(
-        sequelize.fn("LOWER", sequelize.col("name")),
-        "LIKE",
-        `%${name.toLowerCase()}%`
-      ),
-    });
+    const country = await Country.findOne({ where: { nombre: nombrePais } });
 
-    if (countries.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No countries found with the given name" });
+    if (country) {
+      res.status(200).json(country);
+    } else {
+      res.status(404).json({ error: "País no encontrado" });
     }
-
-    res.status(200).json(countries);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).end(error.message);
   }
 };
 
 module.exports = {
-  postCount,
-  getContry,
+  getCountry,
   getCountryId,
   getCountryName,
 };

@@ -1,40 +1,53 @@
-const axios = require("axios");
+//const axios = require("axios");
 
-const { Activity } = require("../db");
+const { Activity, Country } = require("../db");
+const { Op } = require("sequelize");
 
 const postActi = async function (req, res) {
   try {
-    const { name, difficulty, duration, season, CountryActivity } = req.body;
-    const newActivity = await Activity.create({
-      name,
-      difficulty,
-      duration,
-      season,
-    });
+    const { nombre, dificultad, temporada, duracion, nameCountry } = req.body;
 
-    // Relaciona la actividad con los países indicados
-    if (CountryActivity && CountryActivity.length > 0) {
-      const relatedCountryActivity = await Country.findAll({
-        where: { id: CountryActivity },
+    if (!nombre || !dificultad || !temporada || !duracion || !nameCountry) {
+      res.status(400).json({ error: "falta datos" });
+    } else {
+      const data = await Activity.findOne({
+        where: { nombre: nombre },
       });
-
-      await newActivity.addCountries(relatedCountryActivity);
+      if (data) {
+        res.status(404).json({ error: "esta actividad ya existe" });
+      } else {
+        const activity = await Activity.create({
+          nombre,
+          dificultad,
+          temporada,
+          duracion,
+          nameCountry,
+        });
+        for (const iterator of nameCountry) {
+          const country = await Country.findAll({
+            where: {
+              nombre: {
+                [Op.iLike]: `%${iterator}`,
+              },
+            },
+          });
+          await activity.addCountry(country);
+        }
+        return res.status(200).json({ message: "creado satisfactoriamente" });
+      }
     }
-
-    res.status(200).json(newActivity);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(404).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
+// Controlador para la ruta GET /activities
 const getActivity = async function (req, res) {
   try {
-    const activities = await Activity.findAll(); // Consulta todas las actividades en la base de datos
-    res.status(200).json(activities); // Devuelve el arreglo de actividades como una respuesta JSON
+    const data = await Activity.findAll();
+    return res.status(200).json(data);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(404).json({ error: "Internal server error" });
+    res.status(404).end(error.message);
   }
 };
 

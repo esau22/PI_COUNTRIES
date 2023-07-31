@@ -4,6 +4,6 @@ const router = Router();
 const { postActi, getActivity } = require("../controllers/Activity");
 
 router.post("/activities", postActi);
-router.get(" /activities", getActivity);
+router.get("/activities", getActivity);
 
 module.exports = router;

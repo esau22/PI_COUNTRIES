@@ -1,39 +1,29 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
-import React, { useState } from "react";
-import SearchBar from "./SearchBar";
+import { SearchBar } from "./SearchBar";
+import { Filter } from "./Filter";
+import "../styles/NavBar.css";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleLinkClick = () => {
-    setIsOpen(false);
-  };
-
+export const NavBar = () => {
   return (
-    <div className="navbar">
-      <div className="nav_loogo"> emr </div>
-      <div className={`nav_items ${isOpen ? "open" : ""} `}>
-        <Link to="/home" onClick={handleLinkClick}>
-          Home
-        </Link>
-        <Link to="/create" onClick={handleLinkClick}>
-          Create
-        </Link>
-        <Link to="/detail/:id" onClick={handleLinkClick}>
-          Detail
-        </Link>
-        <Link to="/buscar" onClick={handleLinkClick}>
-          Buscar
-        </Link>
+    <nav>
+      <div className="navbar-container">
+        <div className="navbar-logo">
+          <img src="logo.png" alt="Logo" />
+          <span>Nombre de la App</span>
+        </div>
+        <div className="navbar-links">
+          <Link to="/home">Home</Link>
+          <Link to="/create">Crear Actividad</Link>
+        </div>
+        <div className="navbar-controls">
+          <SearchBar />
+          <Filter />
+          <Link to="/">
+            <button>Cerrar Sesion</button>
+          </Link>
+        </div>
       </div>
-      <div
-        className={`nav_toggle ${isOpen ? "open" : ""} `}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
+    </nav>
   );
-}
+};

@@ -3,54 +3,49 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("Country", {
-    id: {
-      type: DataTypes.STRING(3),
-      allowNull: false,
-      primaryKey: true,
+  sequelize.define(
+    "Country",
+    {
+      id: {
+        type: DataTypes.STRING(3),
+        primaryKey: true,
+        allowNull: false,
+      },
+      nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      imagen: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      continente: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      capital: {
+        type: DataTypes.STRING,
+        set(value) {
+          if (Array.isArray(value) && value.length > 0) {
+            this.setDataValue("capital", value[0]);
+          } else {
+            this.setDataValue("capital", null);
+          }
+        },
+      },
+      subregion: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      area: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      poblacion: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    flagImage: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    continent: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    capital: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    subregion: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    area: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    poblacion: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  });
+    { timestamps: false }
+  );
 };
-
-{
-  /*MODELO 1 | Country**
-
--  ID (Código de tres letras). \*
--  Nombre. \*
--  Imagen de la bandera. \*
--  Continente. \*
--  Capital. \*
--  Subregión.
--  Área.
--  Población. \*
-
-<br />*/
-}
